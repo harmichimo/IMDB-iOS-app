@@ -39,15 +39,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
              }
         }
         task.resume()
-
-        // Do any additional setup after loading the view.
-        // TODO: Get the array of movies
-        // TODO: Store the movies in a property to use elsewhere
-        // TODO: Reload your table view data
-        
-
              
-     
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -65,18 +57,26 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let baseUrl = "https://image.tmdb.org/t/p/w185"
         let posterPath = movie["poster_path"] as! String
         let posterUrl = URL(string: baseUrl + posterPath)!
-        cell.posterView.af_setImage(withURL: posterUrl)
+        cell.posterView.af.setImage(withURL: posterUrl)
         return cell
     }
     
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for: cell)!
+        let movie = movies[indexPath.row]
+        
+        let detailsViewController = segue.destination as! MovieDetailsViewController
+        
+        detailsViewController.movie = movie
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
-    */
 
 }
